@@ -4,7 +4,7 @@ description: "Runs the shared Python script from this repo"
 outputs:
   version:
     description: "Result from script"
-    value: ${{ steps.run.outputs.result }}
+    value: ${{ steps.run.outputs.version }}
 
 runs:
   using: "composite"

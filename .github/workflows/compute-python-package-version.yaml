@@ -25,3 +25,6 @@ jobs:
       - name: Run version calculation script
         id: compute
         uses: cpprentice/ci-templates/.github/actions/call-python-package-version-script@main
+
+      - name: Print extracted version from github CI
+        run: echo "${{ steps.compute.outputs.version }}"

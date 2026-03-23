@@ -2,7 +2,7 @@ name: Call Python Package Version Script
 description: "Runs the shared Python script from this repo"
 
 outputs:
-  result:
+  version:
     description: "Result from script"
     value: ${{ steps.run.outputs.result }}
 
@@ -10,7 +10,7 @@ runs:
   using: "composite"
   steps:
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: "3.11"
     

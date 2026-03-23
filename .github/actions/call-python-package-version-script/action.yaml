@@ -1,0 +1,23 @@
+name: Call Python Package Version Script
+description: "Runs the shared Python script from this repo"
+
+outputs:
+  result:
+    description: "Result from script"
+    value: ${{ steps.run.outputs.result }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+    
+    - name: Ensure dependencies are installed
+      shell: bash
+      run: python -m pip install packaging
+
+    - name: Execute script
+      shell: bash
+      run: python "${{ github.action_path }}/compute_version.py" "$GITHUB_OUTPUT"

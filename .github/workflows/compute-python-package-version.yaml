@@ -1,0 +1,35 @@
+# .github/workflows/compute-python-package-version.yml
+on:
+  workflow_call:
+    outputs:
+      version:
+        description: "Computed version"
+        value: ${{ jobs.compute.outputs.version }}
+
+jobs:
+  compute:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.compute.outputs.version }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Ensure tags are up to date
+        run: |
+          git fetch --force --tags --prune --recurse-submodules=no
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Ensure dependencies are installed
+        run: python -m pip install packaging
+
+      - name: Run version calculation script
+        id: compute
+        run: python scripts/compute_version.py "$GITHUB_OUTPUT"
